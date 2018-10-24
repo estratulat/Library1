@@ -18,6 +18,16 @@ namespace Library.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BookAuthor>().HasKey(c => new { c.BookID, c.AuthorID });
+
+            modelBuilder.Entity<BookAuthor>()
+                .HasOne(ba => ba.Book)
+                .WithMany(b => b.BookAuthor)
+                .HasForeignKey(ba => ba.BookID);
+
+            modelBuilder.Entity<BookAuthor>()
+                .HasOne(ba => ba.Author)
+                .WithMany(a => a.BookAuthor)
+                .HasForeignKey(ba => ba.AuthorID);
         }
     }
 }
